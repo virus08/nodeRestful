@@ -4,7 +4,7 @@ const Hapi = require('hapi');
 // Create a server with a host and port
 const server = new Hapi.Server();
 server.connection({ 
-    host: 'localhost', 
+    host: 'node1.vstecs.local', 
     port: 8000 
 });
 
