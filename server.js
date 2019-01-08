@@ -1,11 +1,21 @@
 'use strict';
 
 const Hapi=require('hapi');
+require('dotenv').config() 
+
+/*
+const db = require('db')
+db.connect({
+  host: process.env.DB_HOST,
+  username: process.env.DB_USER,
+  password: process.env.DB_PASS
+})
+*/
 
 // Create a server with a host and port
 const server=Hapi.server({
-    host:'0.0.0.0',
-    port:8000
+    host:process.env.APP_HOST,
+    port:process.env.APP_PORT
 });
 
 // Add the route
