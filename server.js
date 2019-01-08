@@ -2,15 +2,14 @@
 
 const Hapi=require('hapi');
 require('dotenv').config() 
+const MySQL = require('mysql'); 
 
-/*
-const db = require('db')
-db.connect({
-  host: process.env.DB_HOST,
-  username: process.env.DB_USER,
-  password: process.env.DB_PASS
-})
-*/
+const connection = MySQL.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASS,
+    database: process.env.DB_NAME
+});
 
 // Create a server with a host and port
 const server=Hapi.server({
@@ -20,12 +19,16 @@ const server=Hapi.server({
 
 // Add the route
 server.route({
-    method:'GET',
-    path:'/hello',
-    handler:function(request,h) {
+    method: 'GET',
+    path: '/users',
+    handler: function (request, reply) {
+       connection.query('SELECT uid, username, email FROM users',
+       function (error, results, fields) {
+       if (error) throw error;
 
-        return'hello world';
-    }
+       reply(results);
+    });
+  }
 });
 
 // Start the server
